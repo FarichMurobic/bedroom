@@ -19,7 +19,7 @@ public interface AuthenticationIdentityRepository {
 
     Optional<AuthenticationIdentity> findByPhoneNumber(PhoneNumber phoneNumber);
 
-    Optional<AuthenticationIdentity> findByProviderAndExternealIdentifier(
+    Optional<AuthenticationIdentity> findByProviderAndExternelIdentifier(
             AuthenticationProvider provider,
             ExternalIdentifier externalIdentifier
     );
