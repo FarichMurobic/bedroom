@@ -1,0 +1,111 @@
+# ============================================
+# SPRING BOOT / MAVEN
+# ============================================
+HELP.md
+target/
+.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
+
+# ============================================
+# IDE - STS (Spring Tool Suite)
+# ============================================
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+# ============================================
+# IDE - IntelliJ IDEA
+# ============================================
+.idea/
+*.iws
+*.iml
+*.ipr
+out/
+
+# ============================================
+# IDE - NetBeans
+# ============================================
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+build/
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+# ============================================
+# IDE - VS Code
+# ============================================
+.vscode/
+
+# ============================================
+# DATABASE FILES 
+# ============================================
+data/
+*.mv.db
+*.trace.db
+*.h2.db
+*.lob.db
+
+# ============================================
+# APPLICATION PROPERTIES 
+# ============================================
+application-prod.properties
+application-dev.properties.local
+application-prod.properties.local
+*.properties.secret
+*.properties.local
+
+# ============================================
+# LOGS
+# ============================================
+*.log
+logs/
+
+# ============================================
+# SYSTEM FILES
+# ============================================
+Thumbs.db
+.DS_Store
+*.tmp
+*.bak
+
+# ============================================
+# MAVEN (SEMENTARA)
+# ============================================
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+.mvn/timing.properties
+
+# ============================================
+# DOCKER / KUBERNETES 
+# ============================================
+*.tar
+*.tar.gz
+.dockerignore
+Dockerfile.*.tmp
+
+# ============================================
+# OS SPECIFIC
+# ============================================
+*.swp
+*.swo
+*~
+
+# ============================================
+# Maven Wrapper 
+# ============================================
+.mvn/
+mvnw
+mvnw.cmd
