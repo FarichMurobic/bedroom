@@ -4,13 +4,17 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class PasswordHashTest {
+class PasswordHashTest {
 
     @Test
     void shouldCreatePasswordHash() {
-        PasswordHash passwordHash = new PasswordHash("hashed-password");
+        PasswordHash passwordHash =
+                new PasswordHash("hashed-password-value");
 
-        assertEquals("hashed-password", passwordHash.value());
+        assertEquals(
+                "hashed-password-value",
+                passwordHash.value()
+        );
     }
 
     @Test
@@ -25,7 +29,7 @@ public class PasswordHashTest {
     void shouldRejectBlankPasswordHash() {
         assertThrows(
                 IllegalArgumentException.class,
-                () -> new PasswordHash("  ")
+                () -> new PasswordHash("   ")
         );
     }
 
