@@ -4,20 +4,22 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class PhoneNumberTest {
+class PhoneNumberTest {
 
     @Test
     void shouldCreateValidPhoneNumber() {
-        PhoneNumber phoneNumber = new PhoneNumber("+6285795488106");
+        PhoneNumber phoneNumber =
+                new PhoneNumber("+628123456789");
 
-        assertEquals("+6285795488106", phoneNumber.value());
+        assertEquals("+628123456789", phoneNumber.value());
     }
 
     @Test
     void shouldTrimPhoneNumber() {
-        PhoneNumber phoneNumber = new PhoneNumber("  +6285795488106  ");
+        PhoneNumber phoneNumber =
+                new PhoneNumber("  +628123456789  ");
 
-        assertEquals("+6285795488106", phoneNumber.value());
+        assertEquals("+628123456789", phoneNumber.value());
     }
 
     @Test
@@ -37,10 +39,26 @@ public class PhoneNumberTest {
     }
 
     @Test
-    void shouldRejectInvalidPhoneNumber() {
+    void shouldRejectPhoneNumberWithoutPlus() {
         assertThrows(
                 IllegalArgumentException.class,
-                () -> new PhoneNumber("085795488106")
+                () -> new PhoneNumber("628123456789")
+        );
+    }
+
+    @Test
+    void shouldRejectPhoneNumberWithInvalidCountryCode() {
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> new PhoneNumber("+0123456789")
+        );
+    }
+
+    @Test
+    void shouldRejectPhoneNumberExceedingE164Length() {
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> new PhoneNumber("+62812345678901234")
         );
     }
 
