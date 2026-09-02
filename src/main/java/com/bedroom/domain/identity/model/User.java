@@ -48,6 +48,24 @@ public final class User {
         );
     }
 
+    public static User reconstitute(
+            UserId id,
+            Username username,
+            UserStatus status,
+            Set<Role> roles,
+            Instant createdAt,
+            Instant updatedAt
+    ) {
+        return new User(
+                id,
+                username,
+                status,
+                roles,
+                createdAt,
+                updatedAt
+        );
+    }
+
     public void changeUsername(Username username) {
         ensureActive();
         this.username = username;
