@@ -108,5 +108,10 @@ Dockerfile.*.tmp
 # ============================================
 .mvn/
 mvnw
-mvnw.cmdprivate_key.pem
-publik_key.pem
+mvnw.cmd
+
+# ============================================
+# RSA Key
+# ============================================
+private_key.pem
+public_key.pem
