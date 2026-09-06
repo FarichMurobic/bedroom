@@ -5,6 +5,9 @@
 
 	<modelVersion>4.0.0</modelVersion>
 
+	<!-- =========================================================
+         PROJECT PARENT
+         ========================================================= -->
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
@@ -12,22 +15,78 @@
 		<relativePath/>
 	</parent>
 
+	<!-- =========================================================
+         PROJECT IDENTITY
+         ========================================================= -->
 	<groupId>com.bedroom</groupId>
 	<artifactId>bedroom</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 
-	<name>bedroom</name>
-	<description>Bedroom - A platform for sharing creativity, skills, and imagination</description>
+	<name>Bedroom</name>
+	<description>
+		Bedroom - A platform for sharing creativity, skills, and imagination
+	</description>
 
+	<url>https://github.com/FarichMurobic/bedroom</url>
+
+	<!-- =========================================================
+         ORGANIZATION / AUTHOR
+         ========================================================= -->
+	<organization>
+		<name>Farich Murobic</name>
+		<url>https://farichmurobic.vercel.app</url>
+	</organization>
+
+	<developers>
+		<developer>
+			<id>farichmurobiq</id>
+			<name>Farich Murobic</name>
+			<url>https://github.com/FarichMurobic</url>
+			<roles>
+				<role>developer</role>
+				<role>maintainer</role>
+			</roles>
+		</developer>
+	</developers>
+
+	<!-- =========================================================
+         LICENSE
+         ========================================================= -->
+	<licenses>
+		<license>
+			<name>MIT License</name>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+
+	<!-- =========================================================
+         SOURCE CONTROL MANAGEMENT
+         ========================================================= -->
+	<scm>
+		<connection>scm:git:git://github.com/FarichMurobic/bedroom.git</connection>
+		<developerConnection>scm:git:ssh://github.com/FarichMurobic/bedroom.git</developerConnection>
+		<url>https://github.com/FarichMurobic/bedroom</url>
+		<tag>HEAD</tag>
+	</scm>
+
+	<!-- =========================================================
+         JAVA / DEPENDENCY VERSIONS
+         ========================================================= -->
 	<properties>
 		<java.version>21</java.version>
+
 		<twilio.version>10.6.4</twilio.version>
 		<google-api-client.version>2.7.0</google-api-client.version>
 	</properties>
 
+	<!-- =========================================================
+         DEPENDENCIES
+         ========================================================= -->
 	<dependencies>
 
-		<!-- Web -->
+		<!-- =========================
+             Web
+             ========================= -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-webmvc</artifactId>
@@ -38,7 +97,17 @@
 			<artifactId>jackson-datatype-jsr310</artifactId>
 		</dependency>
 
-		<!-- Database -->
+		<!-- =========================
+             Validation
+             ========================= -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-validation</artifactId>
+		</dependency>
+
+		<!-- =========================
+             Database
+             ========================= -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
@@ -49,10 +118,10 @@
 			<artifactId>spring-boot-starter-flyway</artifactId>
 		</dependency>
 
-        <dependency>
-            <groupId>org.flywaydb</groupId>
-            <artifactId>flyway-mysql</artifactId>
-        </dependency>
+		<dependency>
+			<groupId>org.flywaydb</groupId>
+			<artifactId>flyway-mysql</artifactId>
+		</dependency>
 
 		<dependency>
 			<groupId>com.mysql</groupId>
@@ -60,31 +129,25 @@
 			<scope>runtime</scope>
 		</dependency>
 
-		<dependency>
-			<groupId>com.h2database</groupId>
-			<artifactId>h2</artifactId>
-			<scope>test</scope>
-		</dependency>
-
-		<!-- Redis (OTP & token verifikasi email) -->
+		<!-- =========================
+             Redis
+             ========================= -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-redis</artifactId>
 		</dependency>
 
-		<!-- Email (verifikasi akun) -->
+		<!-- =========================
+             Email
+             ========================= -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-mail</artifactId>
 		</dependency>
 
-		<!-- Validation -->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-validation</artifactId>
-		</dependency>
-
-		<!-- Security -->
+		<!-- =========================
+             Security
+             ========================= -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
@@ -95,7 +158,9 @@
 			<artifactId>spring-boot-starter-oauth2-resource-server</artifactId>
 		</dependency>
 
-		<!-- Integrasi pihak ketiga -->
+		<!-- =========================
+             Third-Party Integrations
+             ========================= -->
 		<dependency>
 			<groupId>com.twilio.sdk</groupId>
 			<artifactId>twilio</artifactId>
@@ -108,13 +173,17 @@
 			<version>${google-api-client.version}</version>
 		</dependency>
 
-		<!-- Monitoring -->
+		<!-- =========================
+             Monitoring
+             ========================= -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-actuator</artifactId>
 		</dependency>
 
-		<!-- Development -->
+		<!-- =========================
+             Development
+             ========================= -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-devtools</artifactId>
@@ -122,7 +191,15 @@
 			<optional>true</optional>
 		</dependency>
 
-		<!-- Testing -->
+		<!-- =========================
+             Testing
+             ========================= -->
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<scope>test</scope>
+		</dependency>
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-actuator-test</artifactId>
@@ -149,12 +226,17 @@
 
 	</dependencies>
 
+	<!-- =========================================================
+         BUILD
+         ========================================================= -->
 	<build>
 		<plugins>
+
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
+
 		</plugins>
 	</build>
 
