@@ -1,0 +1,15 @@
+package com.bedroom.application.identitas.result;
+
+import com.bedroom.domain.identitas.valueobject.IdPengguna;
+
+/**
+ * Hasil dari proses autentikasi yang berhasil, berisi identitas pengguna
+ * dan token akses yang diterbitkan. Untuk alur Google, {@code apakahPenggunaBaru}
+ * menandai apakah akun dibuat secara otomatis pada proses ini.
+ */
+public record HasilAutentikasi(
+        IdPengguna idPengguna,
+        String tokenAkses,
+        boolean apakahPenggunaBaru
+) {
+}
