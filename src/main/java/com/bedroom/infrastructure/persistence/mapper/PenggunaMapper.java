@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2026 Farich Murobic
+ * Licensed under the MIT License.
+ */
 package com.bedroom.infrastructure.persistence.mapper;
 
 import com.bedroom.domain.identitas.model.Pengguna;

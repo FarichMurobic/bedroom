@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2026 Farich Murobic
+ * Licensed under the MIT License.
+ */
 package com.bedroom.infrastructure.persistence.entity;
 
 import com.bedroom.domain.identitas.enums.Peran;
