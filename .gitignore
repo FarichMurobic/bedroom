@@ -3,20 +3,11 @@
 # ============================================
 HELP.md
 target/
-.mvn/wrapper/maven-wrapper.jar
-!**/src/main/**/target/
-!**/src/test/**/target/
 
 # ============================================
-# IDE - STS (Spring Tool Suite)
+# MAVEN WRAPPER
 # ============================================
-.apt_generated
-.classpath
-.factorypath
-.project
-.settings
-.springBeans
-.sts4-cache
+.mvn/wrapper/maven-wrapper.jar
 
 # ============================================
 # IDE - IntelliJ IDEA
@@ -28,6 +19,17 @@ target/
 out/
 
 # ============================================
+# IDE - STS / Eclipse
+# ============================================
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings/
+.springBeans
+.sts4-cache
+
+# ============================================
 # IDE - NetBeans
 # ============================================
 /nbproject/private/
@@ -36,8 +38,6 @@ out/
 /nbdist/
 /.nb-gradle/
 build/
-!**/src/main/**/build/
-!**/src/test/**/build/
 
 # ============================================
 # IDE - VS Code
@@ -45,7 +45,7 @@ build/
 .vscode/
 
 # ============================================
-# DATABASE FILES 
+# DATABASE FILES
 # ============================================
 data/
 *.mv.db
@@ -54,13 +54,21 @@ data/
 *.lob.db
 
 # ============================================
-# APPLICATION PROPERTIES 
+# APPLICATION CONFIGURATION / LOCAL OVERRIDES
 # ============================================
-application-prod.properties
 application-dev.properties.local
+application-prod.properties
 application-prod.properties.local
 *.properties.secret
 *.properties.local
+
+# ============================================
+# ENVIRONMENT / SECRETS
+# ============================================
+.env
+.env.*
+*.pem
+*.key
 
 # ============================================
 # LOGS
@@ -77,7 +85,7 @@ Thumbs.db
 *.bak
 
 # ============================================
-# MAVEN (SEMENTARA)
+# MAVEN
 # ============================================
 pom.xml.tag
 pom.xml.releaseBackup
@@ -89,7 +97,7 @@ buildNumber.properties
 .mvn/timing.properties
 
 # ============================================
-# DOCKER / KUBERNETES 
+# DOCKER / KUBERNETES
 # ============================================
 *.tar
 *.tar.gz
@@ -102,16 +110,3 @@ Dockerfile.*.tmp
 *.swp
 *.swo
 *~
-
-# ============================================
-# Maven Wrapper 
-# ============================================
-.mvn/
-mvnw
-mvnw.cmd
-
-# ============================================
-# RSA Key
-# ============================================
-private_key.pem
-public_key.pem
