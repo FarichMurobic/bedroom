@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2026 Farich Murobic
+ * Licensed under the MIT License.
+ */
 package com.bedroom.application.identitas.service;
 
 import com.bedroom.application.identitas.command.RegistrasiEmailCommand;
