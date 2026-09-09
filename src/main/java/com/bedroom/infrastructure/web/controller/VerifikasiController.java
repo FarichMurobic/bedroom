@@ -1,7 +1,10 @@
 /*
  * Copyright (c) 2026 Farich Murobic
- * Licensed under the MIT License.
+ *
+ * This project is licensed under the MIT License.
+ * See the LICENSE file in the project root for more information.
  */
+
 package com.bedroom.infrastructure.web.controller;
 
 import com.bedroom.application.identitas.command.VerifikasiEmailCommand;
@@ -21,12 +24,12 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Objects;
 
 /**
- * Endpoint publik untuk verifikasi akun pengguna, baik melalui tautan
+ * Endpoint verifikasi untuk memverifikasi akun pengguna, baik melalui tautan
  * konfirmasi email maupun kode OTP telepon. Verifikasi yang berhasil
  * langsung menyertakan token akses (auto-login).
  */
 @RestController
-@RequestMapping("/publik/identitas/verifikasi")
+@RequestMapping("/verifikasi")
 public class VerifikasiController {
 
     private final VerifikasiApplicationService verifikasiApplicationService;
@@ -37,6 +40,12 @@ public class VerifikasiController {
         );
     }
 
+    /**
+     * Verifikasi akun menggunakan token yang dikirim ke email.
+     *
+     * @param request request verifikasi email
+     * @return hasil autentikasi dengan token akses
+     */
     @PostMapping("/email")
     public ResponseEntity<HasilAutentikasiResponse> verifikasiEmail(@Valid @RequestBody VerifikasiEmailRequest request) {
         VerifikasiEmailCommand command = new VerifikasiEmailCommand(request.email(), request.token());
@@ -46,6 +55,12 @@ public class VerifikasiController {
         return ResponseEntity.ok(keResponse(hasil));
     }
 
+    /**
+     * Verifikasi akun menggunakan kode OTP yang dikirim ke nomor telepon.
+     *
+     * @param request request verifikasi OTP
+     * @return hasil autentikasi dengan token akses
+     */
     @PostMapping("/otp")
     public ResponseEntity<HasilAutentikasiResponse> verifikasiOtp(@Valid @RequestBody VerifikasiOtpRequest request) {
         VerifikasiOtpCommand command = new VerifikasiOtpCommand(request.nomorTelepon(), request.kodeOtp());

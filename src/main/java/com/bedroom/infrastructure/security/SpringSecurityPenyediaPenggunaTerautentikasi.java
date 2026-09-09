@@ -1,7 +1,10 @@
 /*
  * Copyright (c) 2026 Farich Murobic
- * Licensed under the MIT License.
+ *
+ * This project is licensed under the MIT License.
+ * See the LICENSE file in the project root for more information.
  */
+
 package com.bedroom.infrastructure.security;
 
 import com.bedroom.application.security.PenggunaTerautentikasi;
@@ -9,6 +12,10 @@ import com.bedroom.application.security.PenyediaPenggunaTerautentikasi;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
+/**
+ * Implementasi {@code PenyediaPenggunaTerautentikasi} menggunakan
+ * Spring Security context holder.
+ */
 public final class SpringSecurityPenyediaPenggunaTerautentikasi
         implements PenyediaPenggunaTerautentikasi {
 

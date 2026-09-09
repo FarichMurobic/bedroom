@@ -1,10 +1,16 @@
 /*
  * Copyright (c) 2026 Farich Murobic
- * Licensed under the MIT License.
+ *
+ * This project is licensed under the MIT License.
+ * See the LICENSE file in the project root for more information.
  */
+
 package com.bedroom.infrastructure.web;
 
 import com.bedroom.domain.identitas.exception.AkunTidakAktifException;
+import com.bedroom.domain.identitas.exception.BukanAdminException;
+import com.bedroom.domain.interaksi.exception.TidakBisaMenyukaiKaryaSendiriException;
+import com.bedroom.domain.karya.exception.BukanPemilikKaryaException;
 import com.bedroom.infrastructure.web.dto.ErrorResponse;
 import com.bedroom.shared.exception.AksesDitolakException;
 import com.bedroom.shared.exception.KonflikDataException;
@@ -124,6 +130,33 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(AkunTidakAktifException.class)
     public ResponseEntity<ErrorResponse> tanganiAkunTidakAktif(AkunTidakAktifException pengecualian) {
+        ErrorResponse errorResponse = new ErrorResponse(HttpStatus.FORBIDDEN.value(), pengecualian.getMessage());
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(errorResponse);
+    }
+
+    /**
+     * Pengguna mencoba mengubah karya yang bukan miliknya.
+     */
+    @ExceptionHandler(BukanPemilikKaryaException.class)
+    public ResponseEntity<ErrorResponse> tanganiBukanPemilikKarya(BukanPemilikKaryaException pengecualian) {
+        ErrorResponse errorResponse = new ErrorResponse(HttpStatus.FORBIDDEN.value(), pengecualian.getMessage());
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(errorResponse);
+    }
+
+    /**
+     * Tindakan hanya dapat dilakukan oleh pengguna berperan ADMIN.
+     */
+    @ExceptionHandler(BukanAdminException.class)
+    public ResponseEntity<ErrorResponse> tanganiBukanAdmin(BukanAdminException pengecualian) {
+        ErrorResponse errorResponse = new ErrorResponse(HttpStatus.FORBIDDEN.value(), pengecualian.getMessage());
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(errorResponse);
+    }
+
+    /**
+     * Pengguna mencoba menyukai karya yang ditulis oleh dirinya sendiri.
+     */
+    @ExceptionHandler(TidakBisaMenyukaiKaryaSendiriException.class)
+    public ResponseEntity<ErrorResponse> tanganiTidakBisaMenyukaiKaryaSendiri(TidakBisaMenyukaiKaryaSendiriException pengecualian) {
         ErrorResponse errorResponse = new ErrorResponse(HttpStatus.FORBIDDEN.value(), pengecualian.getMessage());
         return ResponseEntity.status(HttpStatus.FORBIDDEN).body(errorResponse);
     }

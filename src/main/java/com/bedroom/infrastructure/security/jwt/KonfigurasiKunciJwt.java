@@ -1,7 +1,10 @@
 /*
  * Copyright (c) 2026 Farich Murobic
- * Licensed under the MIT License.
+ *
+ * This project is licensed under the MIT License.
+ * See the LICENSE file in the project root for more information.
  */
+
 package com.bedroom.infrastructure.security.jwt;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -18,6 +21,10 @@ import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
 import java.util.Base64;
 
+/**
+ * Konfigurasi kunci RSA untuk JWT dari environment variable.
+ * Hanya aktif pada profile selain 'test'.
+ */
 @Configuration
 @Profile("!test")
 public class KonfigurasiKunciJwt {

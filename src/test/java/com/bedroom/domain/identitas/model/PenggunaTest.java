@@ -1,7 +1,3 @@
-/*
- * Copyright (c) 2026 Farich Murobic
- * Licensed under the MIT License.
- */
 package com.bedroom.domain.identitas.model;
 
 import com.bedroom.domain.identitas.enums.Peran;
@@ -236,6 +232,35 @@ class PenggunaTest {
 
             assertThatThrownBy(pengguna::pastikanAktif)
                     .isInstanceOf(AkunTidakAktifException.class);
+        }
+    }
+
+    @Nested
+    @DisplayName("saat mencatat login")
+    class SaatMencatatLogin {
+
+        @Test
+        @DisplayName("catatLogin() mengisi waktu login terakhir")
+        void catatLogin_mengisiWaktuLoginTerakhir() {
+            Pengguna pengguna = Pengguna.daftarTerverifikasi(NAMA_PENGGUNA);
+            assertThat(pengguna.loginTerakhir()).isNull();
+
+            pengguna.catatLogin();
+
+            assertThat(pengguna.loginTerakhir()).isNotNull();
+        }
+
+        @Test
+        @DisplayName("catatLogin() dapat dipanggil berkali-kali dan selalu memperbarui waktu")
+        void catatLogin_dapatDipanggilBerkaliKali() {
+            Pengguna pengguna = Pengguna.daftarTerverifikasi(NAMA_PENGGUNA);
+
+            pengguna.catatLogin();
+            var loginPertama = pengguna.loginTerakhir();
+            pengguna.catatLogin();
+            var loginKedua = pengguna.loginTerakhir();
+
+            assertThat(loginKedua).isAfterOrEqualTo(loginPertama);
         }
     }
 }

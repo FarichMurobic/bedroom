@@ -1,13 +1,17 @@
 /*
  * Copyright (c) 2026 Farich Murobic
- * Licensed under the MIT License.
+ *
+ * This project is licensed under the MIT License.
+ * See the LICENSE file in the project root for more information.
  */
+
 package com.bedroom.domain.identitas.enums;
 
 /**
  * Merepresentasikan status akun seorang {@code Pengguna}.
- * Status ini menentukan hak akses pengguna terhadap fitur-fitur
- * yang membutuhkan verifikasi, seperti menulis dan menerbitkan karya.
+ *
+ * <p>Status ini menentukan akses pengguna terhadap fitur-fitur tertentu
+ * yang membutuhkan kondisi akun tertentu, seperti menulis dan menerbitkan karya.</p>
  */
 public enum StatusPengguna {
     MENUNGGU_VERIFIKASI,
@@ -15,5 +19,4 @@ public enum StatusPengguna {
     TIDAK_AKTIF,
     DITANGGUHKAN,
     DIBLOKIR
-
 }

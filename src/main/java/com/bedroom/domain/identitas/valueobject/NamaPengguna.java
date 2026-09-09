@@ -1,7 +1,10 @@
 /*
- * Copyright (c) 2026 Farich Murobic
- * Licensed under the MIT License.
+ * Copyright (c) 2026 Farich Murobiq
+ *
+ * This project is licensed under the MIT License.
+ * See the LICENSE file in the project root for more information.
  */
+
 package com.bedroom.domain.identitas.valueobject;
 
 import java.util.Locale;
@@ -9,9 +12,24 @@ import java.util.Objects;
 import java.util.regex.Pattern;
 
 /**
- * Value object yang merepresentasikan nama tampilan (display name)
- * seorang {@code Pengguna} di platform Bedroom, sekaligus dipakai
- * sebagai pengenal pada URL profil publik (mis. bedroom.com/@namapengguna).
+ * Value object yang merepresentasikan nama pengguna ({@code username})
+ * seorang {@code Pengguna} di platform Bedroom.
+ *
+ * <p>Nama pengguna digunakan sebagai pengenal publik pengguna dan
+ * dinormalisasi menjadi huruf kecil. Nilainya hanya dapat terdiri dari
+ * huruf kecil, angka, titik, dan garis bawah dengan batas panjang serta
+ * aturan format tertentu.</p>
+ *
+ * <p>Aturan tersebut memastikan nama pengguna tidak diawali atau diakhiri
+ * dengan titik maupun garis bawah dan tidak memiliki titik atau garis bawah
+ * yang berurutan.</p>
+ *
+ * @param nilai nama pengguna yang akan direpresentasikan
+ * @throws NullPointerException jika {@code nilai} bernilai {@code null}
+ * @throws IllegalArgumentException jika nama pengguna kosong, memiliki
+ *         panjang di luar batas, mengandung karakter yang tidak diizinkan,
+ *         diawali atau diakhiri karakter khusus, atau memiliki karakter
+ *         khusus yang berurutan
  */
 public record NamaPengguna(String nilai) {
 

@@ -1,7 +1,10 @@
 /*
  * Copyright (c) 2026 Farich Murobic
- * Licensed under the MIT License.
+ *
+ * This project is licensed under the MIT License.
+ * See the LICENSE file in the project root for more information.
  */
+
 package com.bedroom.infrastructure.security;
 
 import com.bedroom.infrastructure.web.dto.ErrorResponse;
@@ -18,6 +21,9 @@ import org.springframework.security.web.access.AccessDeniedHandler;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
+/**
+ * Handler untuk menangani akses ditolak dengan response JSON terstruktur.
+ */
 public class JsonAccessDeniedHandler implements AccessDeniedHandler {
 
     private final ObjectMapper objectMapper = new ObjectMapper()

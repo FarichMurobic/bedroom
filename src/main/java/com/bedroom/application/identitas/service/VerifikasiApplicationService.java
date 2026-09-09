@@ -1,7 +1,10 @@
 /*
  * Copyright (c) 2026 Farich Murobic
- * Licensed under the MIT License.
+ *
+ * This project is licensed under the MIT License.
+ * See the LICENSE file in the project root for more information.
  */
+
 package com.bedroom.application.identitas.service;
 
 import com.bedroom.application.identitas.command.VerifikasiEmailCommand;
@@ -23,9 +26,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Objects;
 
 /**
- * Mengorkestrasi use case verifikasi akun pengguna, baik melalui tautan
- * konfirmasi email maupun kode OTP telepon. Verifikasi yang berhasil
- * langsung menyertakan token akses (auto-login).
+ * Application service untuk menangani verifikasi akun melalui email atau OTP.
  */
 public class VerifikasiApplicationService {
 
@@ -49,6 +50,14 @@ public class VerifikasiApplicationService {
         this.penerbitTokenAutentikasi = Objects.requireNonNull(penerbitTokenAutentikasi, "Penerbit token autentikasi tidak boleh kosong");
     }
 
+    /**
+     * Verifikasi akun menggunakan token yang dikirim ke email.
+     *
+     * @param command perintah verifikasi email
+     * @return hasil autentikasi berisi id pengguna dan token akses
+     * @throws KredensialTidakValidException jika token tidak valid atau kadaluwarsa
+     * @throws SumberDayaTidakDitemukanException jika identitas autentikasi atau pengguna tidak ditemukan
+     */
     @Transactional
     public HasilAutentikasi verifikasiEmail(VerifikasiEmailCommand command) {
         Objects.requireNonNull(command, "Perintah verifikasi email tidak boleh kosong");
@@ -68,6 +77,7 @@ public class VerifikasiApplicationService {
                 .orElseThrow(() -> new SumberDayaTidakDitemukanException("Pengguna terkait identitas autentikasi tidak ditemukan"));
 
         pengguna.verifikasi();
+        pengguna.catatLogin();
         repositoriPengguna.simpan(pengguna);
 
         String tokenAkses = penerbitTokenAutentikasi.terbitkan(pengguna.id());
@@ -75,6 +85,14 @@ public class VerifikasiApplicationService {
         return new HasilAutentikasi(pengguna.id(), tokenAkses, true);
     }
 
+    /**
+     * Verifikasi akun menggunakan kode OTP yang dikirim ke nomor telepon.
+     *
+     * @param command perintah verifikasi OTP
+     * @return hasil autentikasi berisi id pengguna dan token akses
+     * @throws KredensialTidakValidException jika kode OTP tidak valid atau kadaluwarsa
+     * @throws SumberDayaTidakDitemukanException jika identitas autentikasi atau pengguna tidak ditemukan
+     */
     @Transactional
     public HasilAutentikasi verifikasiOtp(VerifikasiOtpCommand command) {
         Objects.requireNonNull(command, "Perintah verifikasi OTP tidak boleh kosong");
@@ -94,6 +112,7 @@ public class VerifikasiApplicationService {
                 .orElseThrow(() -> new SumberDayaTidakDitemukanException("Pengguna terkait identitas autentikasi tidak ditemukan"));
 
         pengguna.verifikasi();
+        pengguna.catatLogin();
         repositoriPengguna.simpan(pengguna);
 
         String tokenAkses = penerbitTokenAutentikasi.terbitkan(pengguna.id());

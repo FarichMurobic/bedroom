@@ -1,7 +1,10 @@
 /*
  * Copyright (c) 2026 Farich Murobic
- * Licensed under the MIT License.
+ *
+ * This project is licensed under the MIT License.
+ * See the LICENSE file in the project root for more information.
  */
+
 package com.bedroom.domain.identitas.model;
 
 import com.bedroom.domain.identitas.enums.PenyediaAutentikasi;
@@ -11,10 +14,15 @@ import java.time.Instant;
 import java.util.Objects;
 
 /**
- * Merepresentasikan kredensial autentikasi seorang {@code Pengguna}.
- * Satu {@code Pengguna} dapat memiliki lebih dari satu {@code IdentitasAutentikasi}
- * (misalnya email dan Google sekaligus), namun setiap identitas hanya terikat
- * pada satu {@code PenyediaAutentikasi}.
+ * Merepresentasikan kredensial autentikasi milik seorang {@code Pengguna}.
+ *
+ * <p>Satu {@code Pengguna} dapat memiliki lebih dari satu
+ * {@code IdentitasAutentikasi}, misalnya identitas berbasis email dan Google.
+ * Setiap identitas hanya terikat pada satu {@code PenyediaAutentikasi} dan
+ * memiliki kombinasi data autentikasi yang sesuai dengan penyedianya.</p>
+ *
+ * <p>Entity ini menjaga konsistensi antara penyedia autentikasi dan field
+ * autentikasi yang dimilikinya sebagai bagian dari invariant domain.</p>
  */
 public final class IdentitasAutentikasi {
 
@@ -64,9 +72,20 @@ public final class IdentitasAutentikasi {
     }
 
     /**
-     * Memastikan kombinasi field yang terisi selalu konsisten dengan
-     * penyedia autentikasi yang bersangkutan. Menjadi gerbang terakhir
-     * validasi, baik dipanggil dari factory method maupun dari rekonstruksi().
+     * Memastikan kombinasi field autentikasi selalu konsisten dengan
+     * {@code PenyediaAutentikasi} yang digunakan.
+     *
+     * <p>Validasi ini memastikan setiap jenis identitas hanya memiliki
+     * field yang sesuai dan menolak kombinasi data yang tidak valid
+     * menurut aturan domain.</p>
+     *
+     * @param penyediaAutentikasi penyedia autentikasi yang digunakan
+     * @param email email yang terkait dengan identitas, jika ada
+     * @param nomorTelepon nomor telepon yang terkait dengan identitas, jika ada
+     * @param pengenalEksternal pengenal dari penyedia eksternal, jika ada
+     * @param hashKataSandi hash kata sandi, jika ada
+     * @throws IllegalArgumentException jika kombinasi field tidak sesuai
+     *         dengan penyedia autentikasi
      */
     private static void validasiKonsistensiField(
             PenyediaAutentikasi penyediaAutentikasi,
@@ -123,6 +142,13 @@ public final class IdentitasAutentikasi {
 
     /**
      * Membuat identitas autentikasi baru berbasis email dan kata sandi.
+     *
+     * @param idPengguna identitas pengguna yang memiliki kredensial ini
+     * @param email email yang digunakan untuk autentikasi
+     * @param hashKataSandi hash kata sandi yang digunakan untuk autentikasi
+     * @return identitas autentikasi baru berbasis email
+     * @throws NullPointerException jika salah satu parameter wajib bernilai
+     *         {@code null}
      */
     public static IdentitasAutentikasi untukEmail(
             IdPengguna idPengguna,
@@ -150,8 +176,16 @@ public final class IdentitasAutentikasi {
 
     /**
      * Membuat identitas autentikasi baru berbasis nomor telepon dan kata sandi.
-     * Kata sandi tetap wajib diisi meskipun proses registrasi melibatkan
-     * verifikasi OTP di lapisan aplikasi.
+     *
+     * <p>Kata sandi tetap wajib dimiliki oleh identitas ini meskipun proses
+     * registrasi melibatkan verifikasi OTP di lapisan aplikasi.</p>
+     *
+     * @param idPengguna identitas pengguna yang memiliki kredensial ini
+     * @param nomorTelepon nomor telepon yang digunakan untuk autentikasi
+     * @param hashKataSandi hash kata sandi yang digunakan untuk autentikasi
+     * @return identitas autentikasi baru berbasis nomor telepon
+     * @throws NullPointerException jika salah satu parameter wajib bernilai
+     *         {@code null}
      */
     public static IdentitasAutentikasi untukTelepon(
             IdPengguna idPengguna,
@@ -179,8 +213,16 @@ public final class IdentitasAutentikasi {
 
     /**
      * Membuat identitas autentikasi baru berbasis akun Google.
-     * Tidak memerlukan kata sandi karena autentikasi sepenuhnya
-     * didelegasikan ke Google.
+     *
+     * <p>Identitas ini tidak memiliki kata sandi Bedroom karena proses
+     * autentikasinya sepenuhnya didelegasikan kepada Google.</p>
+     *
+     * @param idPengguna identitas pengguna yang memiliki kredensial ini
+     * @param email email yang terkait dengan akun Google
+     * @param pengenalEksternal pengenal pengguna dari Google
+     * @return identitas autentikasi baru berbasis Google
+     * @throws NullPointerException jika salah satu parameter wajib bernilai
+     *         {@code null}
      */
     public static IdentitasAutentikasi untukGoogle(
             IdPengguna idPengguna,
@@ -208,8 +250,24 @@ public final class IdentitasAutentikasi {
     }
 
     /**
-     * Membangun kembali entity dari data yang tersimpan (mis. dari basis data).
-     * Hanya digunakan oleh lapisan infrastruktur (mapper), bukan oleh logika bisnis.
+     * Membangun kembali entity dari data yang telah tersimpan.
+     *
+     * <p>Factory method ini digunakan ketika entity perlu direkonstruksi
+     * dari sumber penyimpanan, seperti basis data. Method ini mempertahankan
+     * validasi invariant domain yang sama dengan proses pembuatan identitas baru.</p>
+     *
+     * @param id identitas unik autentikasi
+     * @param idPengguna identitas pengguna pemilik kredensial
+     * @param penyediaAutentikasi penyedia autentikasi
+     * @param email email yang terkait dengan identitas, jika ada
+     * @param nomorTelepon nomor telepon yang terkait dengan identitas, jika ada
+     * @param pengenalEksternal pengenal dari penyedia eksternal, jika ada
+     * @param hashKataSandi hash kata sandi, jika ada
+     * @param dibuatPada waktu ketika identitas pertama kali dibuat
+     * @param diperbaruiPada waktu terakhir identitas diperbarui
+     * @return entity {@code IdentitasAutentikasi} yang telah direkonstruksi
+     * @throws NullPointerException jika parameter wajib bernilai {@code null}
+     * @throws IllegalArgumentException jika kombinasi field tidak konsisten
      */
     public static IdentitasAutentikasi rekonstruksi(
             IdIdentitasAutentikasi id,
@@ -236,10 +294,16 @@ public final class IdentitasAutentikasi {
     }
 
     /**
-     * Mengganti kata sandi identitas ini.
+     * Mengganti hash kata sandi pada identitas autentikasi ini.
      *
-     * @throws IllegalStateException jika identitas ini berbasis Google,
-     *         karena Google tidak menggunakan kata sandi Bedroom.
+     * <p>Perubahan kata sandi hanya diperbolehkan untuk identitas yang
+     * menggunakan autentikasi email atau telepon. Identitas berbasis Google
+     * tidak menyimpan kata sandi Bedroom.</p>
+     *
+     * @param hashKataSandiBaru hash kata sandi baru
+     * @throws NullPointerException jika {@code hashKataSandiBaru} bernilai
+     *         {@code null}
+     * @throws IllegalStateException jika identitas berbasis Google
      */
     public void gantiKataSandi(HashKataSandi hashKataSandiBaru) {
         Objects.requireNonNull(

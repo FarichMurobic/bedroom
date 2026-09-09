@@ -1,7 +1,10 @@
 /*
  * Copyright (c) 2026 Farich Murobic
- * Licensed under the MIT License.
+ *
+ * This project is licensed under the MIT License.
+ * See the LICENSE file in the project root for more information.
  */
+
 package com.bedroom.infrastructure.web.controller;
 
 import com.bedroom.application.identitas.command.RegistrasiEmailCommand;
@@ -21,11 +24,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Objects;
 
-/**
- * Endpoint publik untuk registrasi pengguna baru melalui email maupun nomor telepon.
- */
 @RestController
-@RequestMapping("/publik/identitas/registrasi")
+@RequestMapping("/registrasi")
 public class RegistrasiController {
 
     private final RegistrasiApplicationService registrasiApplicationService;
@@ -41,9 +41,7 @@ public class RegistrasiController {
         RegistrasiEmailCommand command = new RegistrasiEmailCommand(
                 request.namaPengguna(), request.email(), request.kataSandi()
         );
-
         HasilRegistrasi hasil = registrasiApplicationService.registrasiEmail(command);
-
         return ResponseEntity.status(HttpStatus.CREATED).body(keResponse(hasil));
     }
 
@@ -52,16 +50,11 @@ public class RegistrasiController {
         RegistrasiTeleponCommand command = new RegistrasiTeleponCommand(
                 request.namaPengguna(), request.nomorTelepon(), request.kataSandi()
         );
-
         HasilRegistrasi hasil = registrasiApplicationService.registrasiTelepon(command);
-
         return ResponseEntity.status(HttpStatus.CREATED).body(keResponse(hasil));
     }
 
     private HasilRegistrasiResponse keResponse(HasilRegistrasi hasil) {
-        return new HasilRegistrasiResponse(
-                hasil.idPengguna().nilai().toString(),
-                hasil.namaPengguna()
-        );
+        return new HasilRegistrasiResponse(hasil.idPengguna().nilai().toString(), hasil.namaPengguna());
     }
 }

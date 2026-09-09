@@ -1,7 +1,10 @@
 /*
  * Copyright (c) 2026 Farich Murobic
- * Licensed under the MIT License.
+ *
+ * This project is licensed under the MIT License.
+ * See the LICENSE file in the project root for more information.
  */
+
 package com.bedroom.domain.identitas.valueobject;
 
 import java.util.Objects;
@@ -9,8 +12,16 @@ import java.util.regex.Pattern;
 
 /**
  * Value object yang merepresentasikan nomor telepon seorang {@code Pengguna}.
- * Wajib mengikuti format internasional E.164 (mis. +6281234567890)
- * agar kompatibel dengan layanan pengiriman OTP/SMS gateway.
+ *
+ * <p>Nomor telepon dinormalisasi dengan menghapus spasi di awal dan akhir
+ * serta wajib mengikuti format internasional {@code E.164}. Format ini
+ * digunakan agar nomor telepon memiliki representasi yang konsisten
+ * dan dapat digunakan oleh layanan pengiriman OTP atau SMS gateway.</p>
+ *
+ * @param nilai nomor telepon yang akan direpresentasikan
+ * @throws NullPointerException jika {@code nilai} bernilai {@code null}
+ * @throws IllegalArgumentException jika nomor telepon kosong atau tidak
+ *         mengikuti format internasional {@code E.164}
  */
 public record NomorTelepon(String nilai) {
 

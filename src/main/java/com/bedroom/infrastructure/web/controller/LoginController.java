@@ -1,7 +1,10 @@
 /*
  * Copyright (c) 2026 Farich Murobic
- * Licensed under the MIT License.
+ *
+ * This project is licensed under the MIT License.
+ * See the LICENSE file in the project root for more information.
  */
+
 package com.bedroom.infrastructure.web.controller;
 
 import com.bedroom.application.identitas.command.LoginEmailCommand;
@@ -23,11 +26,11 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Objects;
 
 /**
- * Endpoint publik untuk login pengguna melalui email, nomor telepon,
+ * Endpoint login untuk melakukan login pengguna melalui email, nomor telepon,
  * maupun akun Google.
  */
 @RestController
-@RequestMapping("/publik/identitas/login")
+@RequestMapping("/login")
 public class LoginController {
 
     private final LoginApplicationService loginApplicationService;
@@ -38,6 +41,12 @@ public class LoginController {
         );
     }
 
+    /**
+     * Login menggunakan email dan kata sandi.
+     *
+     * @param request request login email
+     * @return hasil autentikasi
+     */
     @PostMapping("/email")
     public ResponseEntity<HasilAutentikasiResponse> loginEmail(@Valid @RequestBody LoginEmailRequest request) {
         LoginEmailCommand command = new LoginEmailCommand(request.email(), request.kataSandi());
@@ -45,6 +54,12 @@ public class LoginController {
         return ResponseEntity.ok(keResponse(hasil));
     }
 
+    /**
+     * Login menggunakan nomor telepon dan kata sandi.
+     *
+     * @param request request login telepon
+     * @return hasil autentikasi
+     */
     @PostMapping("/telepon")
     public ResponseEntity<HasilAutentikasiResponse> loginTelepon(@Valid @RequestBody LoginTeleponRequest request) {
         LoginTeleponCommand command = new LoginTeleponCommand(request.nomorTelepon(), request.kataSandi());
@@ -52,6 +67,12 @@ public class LoginController {
         return ResponseEntity.ok(keResponse(hasil));
     }
 
+    /**
+     * Login menggunakan akun Google.
+     *
+     * @param request request login Google
+     * @return hasil autentikasi
+     */
     @PostMapping("/google")
     public ResponseEntity<HasilAutentikasiResponse> loginGoogle(@Valid @RequestBody LoginGoogleRequest request) {
         LoginGoogleCommand command = new LoginGoogleCommand(request.idTokenGoogle());

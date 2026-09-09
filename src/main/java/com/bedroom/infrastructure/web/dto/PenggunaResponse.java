@@ -1,24 +1,23 @@
 /*
  * Copyright (c) 2026 Farich Murobic
- * Licensed under the MIT License.
+ *
+ * This project is licensed under the MIT License.
+ * See the LICENSE file in the project root for more information.
  */
+
 package com.bedroom.infrastructure.web.dto;
 
-import com.bedroom.domain.identitas.model.Pengguna;
+import com.bedroom.application.identitas.result.PenggunaResult;
 
 /**
- * Representasi data {@code Pengguna} yang aman untuk ditampilkan ke klien.
+ * Response DTO untuk data pengguna.
  */
 public record PenggunaResponse(
         String id,
         String namaPengguna,
         String status
 ) {
-    public static PenggunaResponse dari(Pengguna pengguna) {
-        return new PenggunaResponse(
-                pengguna.id().nilai().toString(),
-                pengguna.namaPengguna().nilai(),
-                pengguna.status().name()
-        );
+    public static PenggunaResponse dari(PenggunaResult hasil) {
+        return new PenggunaResponse(hasil.id(), hasil.namaPengguna(), hasil.status());
     }
 }

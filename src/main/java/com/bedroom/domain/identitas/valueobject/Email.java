@@ -1,7 +1,10 @@
 /*
  * Copyright (c) 2026 Farich Murobic
- * Licensed under the MIT License.
+ *
+ * This project is licensed under the MIT License.
+ * See the LICENSE file in the project root for more information.
  */
+
 package com.bedroom.domain.identitas.valueobject;
 
 import java.util.Locale;
@@ -10,8 +13,20 @@ import java.util.regex.Pattern;
 
 /**
  * Value object yang merepresentasikan alamat email seorang {@code Pengguna}.
- * Digunakan sebagai salah satu metode autentikasi ({@code PenyediaAutentikasi.EMAIL})
- * maupun sebagai atribut identitas yang diperoleh dari penyedia eksternal (Google).
+ *
+ * <p>Email dinormalisasi dengan menghapus spasi di awal dan akhir serta
+ * mengubah seluruh karakter menjadi huruf kecil. Nilai email juga harus
+ * memenuhi format yang valid dan tidak melebihi panjang maksimal yang
+ * ditentukan oleh domain.</p>
+ *
+ * <p>Value object ini digunakan sebagai salah satu metode autentikasi
+ * ({@code PenyediaAutentikasi.EMAIL}) maupun sebagai atribut identitas
+ * yang diperoleh dari penyedia eksternal seperti Google.</p>
+ *
+ * @param nilai alamat email yang akan direpresentasikan
+ * @throws NullPointerException jika {@code nilai} bernilai {@code null}
+ * @throws IllegalArgumentException jika email kosong, melebihi panjang
+ *         maksimal, atau memiliki format yang tidak valid
  */
 public record Email(String nilai) {
 

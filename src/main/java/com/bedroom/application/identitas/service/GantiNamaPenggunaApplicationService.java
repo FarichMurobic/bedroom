@@ -1,10 +1,14 @@
 /*
  * Copyright (c) 2026 Farich Murobic
- * Licensed under the MIT License.
+ *
+ * This project is licensed under the MIT License.
+ * See the LICENSE file in the project root for more information.
  */
+
 package com.bedroom.application.identitas.service;
 
 import com.bedroom.application.identitas.command.GantiNamaPenggunaCommand;
+import com.bedroom.application.identitas.result.PenggunaResult;
 import com.bedroom.application.security.PenggunaTerautentikasi;
 import com.bedroom.application.security.PenyediaPenggunaTerautentikasi;
 import com.bedroom.domain.identitas.model.Pengguna;
@@ -18,8 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Objects;
 
 /**
- * Mengorkestrasi use case penggantian nama pengguna oleh pengguna
- * yang sedang login.
+ * Application service untuk mengganti nama pengguna dari pengguna yang sedang terautentikasi.
  */
 public class GantiNamaPenggunaApplicationService {
 
@@ -34,8 +37,16 @@ public class GantiNamaPenggunaApplicationService {
         this.penyediaPenggunaTerautentikasi = Objects.requireNonNull(penyediaPenggunaTerautentikasi, "Penyedia pengguna terautentikasi tidak boleh kosong");
     }
 
+    /**
+     * Mengeksekusi penggantian nama pengguna.
+     *
+     * @param command perintah ganti nama pengguna
+     * @return hasil data pengguna yang telah diperbarui
+     * @throws SumberDayaTidakDitemukanException jika pengguna tidak ditemukan
+     * @throws KonflikDataException jika nama pengguna baru sudah digunakan
+     */
     @Transactional
-    public Pengguna execute(GantiNamaPenggunaCommand command) {
+    public PenggunaResult execute(GantiNamaPenggunaCommand command) {
         Objects.requireNonNull(command, "Perintah ganti nama pengguna tidak boleh kosong");
 
         NamaPengguna namaPenggunaBaru = new NamaPengguna(command.namaPenggunaBaru());
@@ -52,6 +63,12 @@ public class GantiNamaPenggunaApplicationService {
         }
 
         pengguna.gantiNamaPengguna(namaPenggunaBaru);
-        return repositoriPengguna.simpan(pengguna);
+        Pengguna penggunaTersimpan = repositoriPengguna.simpan(pengguna);
+
+        return new PenggunaResult(
+                penggunaTersimpan.id().nilai().toString(),
+                penggunaTersimpan.namaPengguna().nilai(),
+                penggunaTersimpan.status().name()
+        );
     }
 }

@@ -1,12 +1,15 @@
 /*
  * Copyright (c) 2026 Farich Murobic
- * Licensed under the MIT License.
+ *
+ * This project is licensed under the MIT License.
+ * See the LICENSE file in the project root for more information.
  */
+
 package com.bedroom.infrastructure.web.controller;
 
 import com.bedroom.application.identitas.command.GantiNamaPenggunaCommand;
+import com.bedroom.application.identitas.result.PenggunaResult;
 import com.bedroom.application.identitas.service.GantiNamaPenggunaApplicationService;
-import com.bedroom.domain.identitas.model.Pengguna;
 import com.bedroom.infrastructure.web.dto.GantiNamaPenggunaRequest;
 import com.bedroom.infrastructure.web.dto.PenggunaResponse;
 import jakarta.validation.Valid;
@@ -19,9 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Objects;
 
 /**
- * Endpoint terautentikasi untuk mengganti nama pengguna milik akun
- * yang sedang login. Siapa pengguna yang login diambil dari konteks
- * keamanan (token JWT), bukan dari isi permintaan.
+ * Controller untuk operasi penggantian nama pengguna.
  */
 @RestController
 @RequestMapping("/identitas/pengguna")
@@ -35,12 +36,18 @@ public class GantiNamaPenggunaController {
         );
     }
 
+    /**
+     * Mengganti nama pengguna yang sedang terautentikasi.
+     *
+     * @param request request berisi nama pengguna baru
+     * @return data pengguna yang telah diperbarui
+     */
     @PatchMapping("/nama-pengguna")
     public ResponseEntity<PenggunaResponse> gantiNamaPengguna(@Valid @RequestBody GantiNamaPenggunaRequest request) {
         GantiNamaPenggunaCommand command = new GantiNamaPenggunaCommand(request.namaPenggunaBaru());
 
-        Pengguna pengguna = gantiNamaPenggunaApplicationService.execute(command);
+        PenggunaResult hasil = gantiNamaPenggunaApplicationService.execute(command);
 
-        return ResponseEntity.ok(PenggunaResponse.dari(pengguna));
+        return ResponseEntity.ok(PenggunaResponse.dari(hasil));
     }
 }

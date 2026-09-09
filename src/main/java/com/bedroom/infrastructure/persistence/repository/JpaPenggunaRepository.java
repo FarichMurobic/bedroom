@@ -1,7 +1,10 @@
 /*
  * Copyright (c) 2026 Farich Murobic
- * Licensed under the MIT License.
+ *
+ * This project is licensed under the MIT License.
+ * See the LICENSE file in the project root for more information.
  */
+
 package com.bedroom.infrastructure.persistence.repository;
 
 import com.bedroom.infrastructure.persistence.entity.PenggunaEntity;
@@ -15,7 +18,19 @@ import java.util.UUID;
  */
 public interface JpaPenggunaRepository extends JpaRepository<PenggunaEntity, UUID> {
 
+    /**
+     * Mencari pengguna berdasarkan nama pengguna.
+     *
+     * @param namaPengguna nama pengguna yang dicari
+     * @return optional pengguna
+     */
     Optional<PenggunaEntity> findByNamaPengguna(String namaPengguna);
 
+    /**
+     * Mengecek apakah pengguna dengan nama pengguna tertentu sudah ada.
+     *
+     * @param namaPengguna nama pengguna yang dicek
+     * @return true jika sudah ada, false jika belum
+     */
     boolean existsByNamaPengguna(String namaPengguna);
 }
