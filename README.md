@@ -23,3 +23,5 @@ Bedroom is released under the MIT License.
 The MIT License permits anyone to use, copy, modify, merge, publish, distribute, sublicense, and sell copies of the software, subject to the conditions stated in the license.
 
 The software is provided "as is", without warranty of any kind. For the complete terms and conditions, see the [`LICENSE`](LICENSE) file in this repository.
+
+Farich Murobic
